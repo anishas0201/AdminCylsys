@@ -309,7 +309,7 @@
 
         validateField("PhoneNo", "Phone Number is required.", "PhoneNoError");
 
-        validatePhoneNumber("PhoneNo", "Phone Number should be 10 digits.", "PhoneNoError");
+     //   validatePhoneNumber("PhoneNo", "Phone Number should be 10 digits.", "PhoneNoError");
 
         validateField("Budget", "Budget is required.", "BudgetError");
 
@@ -345,7 +345,7 @@
 
             validateField("PhoneNo", null, "PhoneNoError") &&
 
-            validatePhoneNumber("PhoneNo", "Phone Number should be 10 digits.", "PhoneNoError") &&
+          //  validatePhoneNumber("PhoneNo", "Phone Number should be 10 digits.", "PhoneNoError") &&
 
             validateField("Budget", null, "BudgetError") &&
 
@@ -528,34 +528,56 @@
 
     }
 
+    //function validateAlphabet() {
+
+    //    var inputElement = document.getElementById('position');
+
+    //    var inputValue = inputElement.value;
+
+    //    // Remove non-alphabetic characters
+
+    //    var alphabeticValue = inputValue.replace(/[^a-zA-Z]/g, '');
+
+    //    // Update the input field value
+
+    //    inputElement.value = alphabeticValue;
+
+    //    // Display an error message if non-alphabetic characters are removed
+
+    //    var positionError = document.getElementById('positionError');
+
+    //    if (inputValue !== alphabeticValue) {
+
+    //        positionError.innerText = 'Please enter only alphabetical characters.';
+
+    //    } else {
+
+    //        positionError.innerText = '';
+
+    //    }
+
+    //}
+
+
     function validateAlphabet() {
-
         var inputElement = document.getElementById('position');
-
         var inputValue = inputElement.value;
 
-        // Remove non-alphabetic characters
-
-        var alphabeticValue = inputValue.replace(/[^a-zA-Z]/g, '');
+        // Remove non-alphabetic characters and spaces
+        var alphabeticValue = inputValue.replace(/[^a-zA-Z\s]/g, '');
 
         // Update the input field value
-
         inputElement.value = alphabeticValue;
 
         // Display an error message if non-alphabetic characters are removed
-
         var positionError = document.getElementById('positionError');
 
         if (inputValue !== alphabeticValue) {
-
-            positionError.innerText = 'Please enter only alphabetical characters.';
-
+            positionError.innerText = 'Please enter only alphabetical characters and spaces.';
         } else {
-
             positionError.innerText = '';
-
         }
-
     }
+
 
 </script>

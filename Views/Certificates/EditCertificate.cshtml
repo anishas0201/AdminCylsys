@@ -101,10 +101,11 @@
     function displayFileName() {
 
         var input = document.getElementById('upload_certificate');
-
-        var fileName = input.files.length > 0 ? input.files[0].name : '@Model.upload_certificate';
+        var file = document.getElementById('selectedFileName').innerText;
+        var fileName = input.files.length > 0 ? input.files[0].name : file;
 
         console.log(fileName);
+     
 
         document.getElementById('selectedFileName').innerText = 'Selected File: ' + fileName;
 

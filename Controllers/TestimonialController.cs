@@ -3,6 +3,7 @@ using AdminCylsys.Interface;
 using AdminCylsys.Models;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 namespace AdminCylsys.Controllers
@@ -19,17 +20,19 @@ namespace AdminCylsys.Controllers
             ViewBag.cli = new SelectList(client_name, "id", "client_name");
             var project_name = test.GetProjectList();
             ViewBag.pro = new SelectList(project_name, "id", "project_name");
+
             if (testimonial_Image != null && testimonial_Image.ContentLength > 0)
             {
                 string imgname = Path.GetFileName(testimonial_Image.FileName);
-                string imgext = Path.GetExtension(imgname);
-                if (imgext == ".jpg" || imgext == ".png" || imgext == ".jpeg" || imgext == ".svg")
+                string imgext = Path.GetExtension(imgname).ToUpper(); 
+                string[] validExtensions = { ".JPG", ".PNG", ".JPEG", ".SVG" }; 
+
+                if (validExtensions.Contains(imgext)) 
                 {
                     string imgpath = Path.Combine(Server.MapPath("~/Uploads"), imgname);
-                    Helper.WriteLog("this is image path for TestiMonial" + imgpath);
+                //    Helper.WriteLog("this is image path for TestiMonial" + imgpath);
                     testimonial_Image.SaveAs(imgpath);
-                    ResponseModel res = new ResponseModel();
-                    res = test.Addtestimonial(tm, imgname, imgpath);
+                    ResponseModel res = test.Addtestimonial(tm, imgname, imgpath);
                     return Json(new { success = res.status, message = res.Message });
                 }
                 else
@@ -39,9 +42,9 @@ namespace AdminCylsys.Controllers
             }
             else if (!string.IsNullOrEmpty(tm.testimonial_Image))
             {
-                // Use the value from CM  MODEL cLIENT_Image
-                ResponseModel res = test.Addtestimonial(tm, tm.testimonial_Image, tm.path); // Adjust parameters accordingly
-                // Return a JSON response
+           
+                ResponseModel res = test.Addtestimonial(tm, tm.testimonial_Image, tm.path); 
+                                                                                            
                 return Json(new { success = res.status, message = res.Message });
             }
             else
@@ -49,6 +52,7 @@ namespace AdminCylsys.Controllers
                 return Json(new { success = false, message = "Please upload an image." });
             }
         }
+
 
         public ActionResult AllTestimonial()
         {
@@ -88,20 +92,20 @@ namespace AdminCylsys.Controllers
                     }
                     else
                     {
-                        // If the code reaches here, it means there was an issue with the file or data
+                       
                         TempData["ErrorMessage"] = "Error adding testimonial. Please check your input.";
                     }
                 }
                 else
                 {
-                    // Invalid image format
                     TempData["ErrorMessage"] = "Invalid image format.";
                 }
             }
-           
+
 
             return View();
         }
+
 
 
         public JsonResult DeleteTestimonial(int testimonialId)
